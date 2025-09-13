@@ -22,10 +22,13 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          light: "hsl(var(--primary-light))",
+          dark: "hsl(var(--primary-dark))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
+          accent: "hsl(var(--secondary-accent))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -38,6 +41,12 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          warm: "hsl(var(--accent-warm))",
+        },
+        chat: {
+          "bubble-user": "hsl(var(--chat-bubble-user))",
+          "bubble-assistant": "hsl(var(--chat-bubble-assistant))",
+          input: "hsl(var(--chat-input))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -62,6 +71,20 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      backgroundImage: {
+        "gradient-hero": "var(--gradient-hero)",
+        "gradient-card": "var(--gradient-card)",
+        "gradient-chat": "var(--gradient-chat)",
+      },
+      boxShadow: {
+        soft: "var(--shadow-soft)",
+        card: "var(--shadow-card)",
+        chat: "var(--shadow-chat)",
+      },
+      transitionTimingFunction: {
+        smooth: "var(--transition-smooth)",
+        spring: "var(--transition-spring)",
       },
       keyframes: {
         "accordion-down": {

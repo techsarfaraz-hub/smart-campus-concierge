@@ -2,41 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Smart Campus Assistant Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Campus Theme Colors */
+    --background: 220 20% 98%;
+    --foreground: 220 15% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 15% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 15% 12%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Academic Blue Primary */
+    --primary: 208 85% 45%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 208 85% 60%;
+    --primary-dark: 208 85% 30%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Teal Secondary */
+    --secondary: 175 60% 92%;
+    --secondary-foreground: 175 60% 15%;
+    --secondary-accent: 175 85% 35%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted Academic */
+    --muted: 220 15% 96%;
+    --muted-foreground: 220 10% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Warm Accent */
+    --accent: 35 85% 92%;
+    --accent-foreground: 35 85% 25%;
+    --accent-warm: 35 85% 55%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 15% 88%;
+    --input: 220 15% 94%;
+    --ring: 208 85% 45%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Chat Specific */
+    --chat-bubble-user: 208 85% 45%;
+    --chat-bubble-assistant: 220 15% 96%;
+    --chat-input: 0 0% 100%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(208 85% 45%), hsl(175 85% 35%));
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 15% 98%));
+    --gradient-chat: linear-gradient(180deg, hsl(220 20% 98%), hsl(220 15% 96%));
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(220 15% 12% / 0.1);
+    --shadow-card: 0 8px 32px -8px hsl(220 15% 12% / 0.12);
+    --shadow-chat: 0 2px 12px -2px hsl(208 85% 45% / 0.15);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
     --sidebar-background: 0 0% 98%;
 
@@ -56,41 +82,67 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Campus Theme Colors - Dark Mode */
+    --background: 220 20% 8%;
+    --foreground: 220 15% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 20% 10%;
+    --card-foreground: 220 15% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 20% 10%;
+    --popover-foreground: 220 15% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    /* Academic Blue Primary - Dark */
+    --primary: 208 85% 60%;
+    --primary-foreground: 220 20% 8%;
+    --primary-light: 208 85% 70%;
+    --primary-dark: 208 85% 50%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    /* Teal Secondary - Dark */
+    --secondary: 175 20% 15%;
+    --secondary-foreground: 175 60% 90%;
+    --secondary-accent: 175 85% 45%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    /* Muted Academic - Dark */
+    --muted: 220 15% 12%;
+    --muted-foreground: 220 10% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    /* Warm Accent - Dark */
+    --accent: 35 30% 15%;
+    --accent-foreground: 35 85% 80%;
+    --accent-warm: 35 85% 65%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 220 15% 95%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 220 15% 20%;
+    --input: 220 15% 18%;
+    --ring: 208 85% 60%;
+
+    /* Chat Specific - Dark */
+    --chat-bubble-user: 208 85% 60%;
+    --chat-bubble-assistant: 220 15% 12%;
+    --chat-input: 220 15% 12%;
+
+    /* Gradients - Dark */
+    --gradient-hero: linear-gradient(135deg, hsl(208 85% 45%), hsl(175 85% 35%));
+    --gradient-card: linear-gradient(180deg, hsl(220 20% 10%), hsl(220 15% 8%));
+    --gradient-chat: linear-gradient(180deg, hsl(220 20% 8%), hsl(220 15% 6%));
+
+    /* Shadows - Dark */
+    --shadow-soft: 0 4px 20px -4px hsl(220 20% 0% / 0.3);
+    --shadow-card: 0 8px 32px -8px hsl(220 20% 0% / 0.4);
+    --shadow-chat: 0 2px 12px -2px hsl(208 85% 60% / 0.25);
+
+    /* Sidebar - Dark */
+    --sidebar-background: 220 20% 8%;
+    --sidebar-foreground: 220 15% 95%;
+    --sidebar-primary: 208 85% 60%;
+    --sidebar-primary-foreground: 220 20% 8%;
+    --sidebar-accent: 220 15% 12%;
+    --sidebar-accent-foreground: 220 15% 95%;
+    --sidebar-border: 220 15% 20%;
+    --sidebar-ring: 208 85% 60%;
   }
 }
 
@@ -100,6 +152,30 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
   }
 }
