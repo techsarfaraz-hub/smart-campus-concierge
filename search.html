@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Smart Campus — Powerful Search</title>
+<style>body{font-family:Inter,system-ui;background:#071428;color:#e6eefc;padding:20px} .card{max-width:1000px;margin:0 auto;background:#081726;padding:18px;border-radius:12px} .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#5eead4,#7c3aed);display:inline-flex;align-items:center;justify-content:center;color:#042634;font-weight:800} .search{display:flex;gap:8px;margin-top:12px} input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit} button{padding:10px 12px;border-radius:10px;border:0;background:linear-gradient(90deg,#5eead4,#7c3aed);color:#042634;font-weight:700;cursor:pointer} .results{margin-top:12px} .item{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);margin-top:8px} mark{background:#fff4b1;color:#111;padding:0 3px;border-radius:3px}</style>
+</head><body>
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;gap:12px;align-items:center"><div class="logo">SCA</div><div><h2 style="margin:0">Smart Campus — Unified Search</h2><div style="color:#9fb4df;font-size:13px">Find timetables, dining, library & admin info</div></div></div><div><button id="toggle">Backend: OFF</button></div></div>
+  <div class="search">
+    <input id="q" placeholder="Search e.g. 'Data Structures', 'lunch', 'Advanced Structures'"/>
+    <button id="go">Search</button>
+  </div>
+  <div class="results" id="results"><div style="color:#9fb4df">Type a query and press Search.</div></div>
+</div>
+<script>
+const API = "http://127.0.0.1:8000/search";
+let useBackend=false;
+const demo={timetables:[{id:1,course_code:'CS301',course_name:'Data Structures',day:'Mon',start:'09:00',end:'10:00',room:'CS-201',instructor:'Dr. Rao'}],dining:[{id:1,outlet:'North Mess',menu:'Veg Thali; Dal; Rice; Paneer',date:'2025-09-12'}],library:[{id:1,title:'Advanced Structures',author:'JK Smith',copies:2,location:'Lib-2'}],facilities:[{id:1,name:'Main Library',type:'library',location:'Block A'}],admin:[{id:1,dept:'Examinations',contact:'Meera Nair',email:'meera@uni.edu'}]};
+const qEl=document.getElementById('q'), res=document.getElementById('results'), toggle=document.getElementById('toggle'), go=document.getElementById('go');
+toggle.onclick=()=>{useBackend=!useBackend;toggle.textContent='Backend: '+(useBackend?'ON':'OFF')};
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function highlight(text,q){if(!q) return escapeHtml(text); const parts=q.trim().split(/\s+/).filter(Boolean).map(p=>p.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')); if(!parts.length) return escapeHtml(text); const re=new RegExp('('+parts.join('|')+')','ig'); return escapeHtml(text).replace(re,'<mark>$1</mark>');}
+async function search(q){res.innerHTML='<div style="color:#9fb4df">Searching...</div>'; try{ if(useBackend){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({q})}); if(r.ok){const data=await r.json(); render(data,q); return;} } const out={timetables:[],dining:[],library:[],facilities:[],admin:[]}; Object.keys(demo).forEach(k=>demo[k].forEach(it=>{const txt=JSON.stringify(Object.values(it)).toLowerCase(); if(txt.includes(q.toLowerCase())) out[k].push(it);})); render(out,q);}catch(e){res.innerHTML='<div style="color:#ef4444">Search failed: '+escapeHtml(String(e))+'</div>'}}
+function render(data,q){res.innerHTML=''; const groups=[['Timetables',data.timetables],['Dining',data.dining],['Library',data.library],['Facilities',data.facilities],['Admin',data.admin]]; let any=false; groups.forEach(([title,arr])=>{ if(!arr||!arr.length) return; any=true; const h=document.createElement('div'); h.innerHTML='<strong>'+title+'</strong>'; res.appendChild(h); arr.forEach(it=>{ const div=document.createElement('div'); div.className='item'; if(title==='Timetables'){div.innerHTML='<div>'+highlight(it.course_code+' - '+it.course_name,q)+'</div><div style="color:#9fb4df;font-size:13px">'+highlight(it.day,q)+' • '+highlight(it.start+'-'+it.end,q)+' • '+highlight(it.room,q)+'</div>';} else if(title==='Dining'){div.innerHTML='<div>'+highlight(it.outlet,q)+' — '+highlight(it.menu,q)+'</div>';} else if(title==='Library'){div.innerHTML='<div>'+highlight(it.title,q)+'</div><div style="color:#9fb4df;font-size:13px">'+highlight(it.author,q)+' • Copies: '+(it.copies||'-')+'</div>';} else {div.innerHTML=JSON.stringify(it);} res.appendChild(div); }); }); if(!any) res.innerHTML='<div style="color:#9fb4df">No results</div>';}
+go.onclick=()=>{const q=qEl.value.trim(); if(!q){res.innerHTML='<div style="color:#9fb4df">Please enter a query.</div>'; return;} search(q);} ;
+</script>
+</body></html>
